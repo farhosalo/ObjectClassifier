@@ -1,0 +1,17 @@
+/data*
+/Data*
+/Logs
+/tf_logs
+.ipynb_checkpoints/
+.vscode/
+my_*
+.DS_Store
+*.bak
+*.bak.*
+*.ckpt
+*.old
+*.pyc
+checkpoint
+*.h5
+ClassNames.txt
+/__pycache__

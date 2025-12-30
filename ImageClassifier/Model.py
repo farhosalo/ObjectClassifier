@@ -9,7 +9,7 @@ from tensorflow.keras.applications.xception import Xception as BaseModel
 from tensorflow.keras.applications.xception import preprocess_input as preprocess_input
 
 
-class ClassifierModel:
+class Model:
     def __init__(self, inputWidth, inputHeight, nClasses):
         self.__InputShape = (inputWidth, inputHeight) + (3,)
         self.__BaseModel__ = BaseModel(

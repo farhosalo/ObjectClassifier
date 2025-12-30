@@ -5,7 +5,7 @@ from PIL import Image
 import logging
 
 
-class ObjectPredictor:
+class Predictor:
     def __init__(self, modelPath=None, classNamePath=None, height=224, width=224):
         self.__Model__ = None
         self.__ClassName__ = None

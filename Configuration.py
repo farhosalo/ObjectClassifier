@@ -9,6 +9,6 @@ config = {
     },
     "model": {
         "EPOCHS": 30,
-        "MODEL_PATH": "./ObjectClassifier.keras",
+        "MODEL_PATH": "./ImageClassifier.keras",
     },
 }

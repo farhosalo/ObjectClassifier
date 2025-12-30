@@ -5,7 +5,7 @@ import seaborn as sns
 import logging
 
 
-class ObjectDataset:
+class Dataset:
     def __init__(self, datasetDir, imageWidth, imageHeight, batchSize):
         self.__DatasetDir = datasetDir
         self.__ImageWidth = imageWidth

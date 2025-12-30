@@ -1,4 +1,4 @@
-from ObjectClassifier import ObjectDataset, ClassifierModel
+from ImageClassifier import Dataset, Model
 import Configuration
 import os
 import logging
@@ -13,7 +13,7 @@ def trainAndSave():
     datasetConfig = Configuration.config["dataset"]
 
     batchSize = datasetConfig["BATCH_SIZE"]
-    roadSignDataset = ObjectDataset.ObjectDataset(
+    imageDataset = Dataset.Dataset(
         datasetDir=datasetConfig["DATASET_DIR"],
         imageWidth=datasetConfig["IMAGE_WIDTH"],
         imageHeight=datasetConfig["IMAGE_HEIGHT"],
@@ -21,12 +21,12 @@ def trainAndSave():
     )
 
     # Get class names from dataset
-    classNames = roadSignDataset.getClassNames()
+    classNames = imageDataset.getClassNames()
     nClasses = len(classNames)
 
     np.savetxt(datasetConfig["CLASS_NAME_FILE"], classNames, fmt="%s")
 
-    trainData, validData, testData = roadSignDataset.getData(
+    trainData, validData, testData = imageDataset.getData(
         trainRatio=0.8, validRatio=0.2
     )
 
@@ -35,10 +35,10 @@ def trainAndSave():
     logging.info(f"and validation data size={len(list(validData)) * batchSize}")
     logging.info(f"Number of classes = {nClasses}\n")
 
-    roadSignDataset.plotClassDistribution()
-    roadSignDataset.plotExamplesFromDataset(7)
+    imageDataset.plotClassDistribution()
+    imageDataset.plotExamplesFromDataset(7)
 
-    model = ClassifierModel.ClassifierModel(
+    model = Model.Model(
         inputWidth=datasetConfig["IMAGE_HEIGHT"],
         inputHeight=datasetConfig["IMAGE_HEIGHT"],
         nClasses=nClasses,

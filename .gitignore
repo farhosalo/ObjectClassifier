@@ -13,5 +13,6 @@ my_*
 *.pyc
 checkpoint
 *.h5
+*.keras
 ClassNames.txt
 /__pycache__

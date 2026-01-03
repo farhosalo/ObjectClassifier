@@ -88,3 +88,11 @@ python Predict.py -i <path to image>
 ```
 
 This command will output the predicted class of the input image you provide.
+
+## Contributing
+
+Contributions are welcome! If you find any bugs or have ideas for new features, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).

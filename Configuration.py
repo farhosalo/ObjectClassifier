@@ -1,13 +1,13 @@
 config = {
-    "dataset": {
-        "DATASET_DIR": "Data",
-        "IMAGE_HEIGHT": 224,
-        "IMAGE_WIDTH": 224,
-        "BATCH_SIZE": 10,
-        "CLASS_NAME_FILE": "ClassName.txt",
+    "dataset": {  # Dataset configuration
+        "DATASET_DIR": "Data",  # Path to the dataset directory
+        "IMAGE_HEIGHT": 224,  # Input Height
+        "IMAGE_WIDTH": 224,  # Input Width
+        "BATCH_SIZE": 10,  # Batch Size for training and validation
+        "CLASS_NAME_FILE": "ClassName.txt",  # File to save class names
     },
-    "model": {
-        "EPOCHS": 30,
-        "MODEL_PATH": "./ImageClassifier.keras",
+    "model": {  # Model configuration
+        "EPOCHS": 20,  # Number of training epochs
+        "MODEL_PATH": "./ImageClassifier.keras",  # Path to save or load the model
     },
 }

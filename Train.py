@@ -9,22 +9,78 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 
 def trainAndSave():
-    modelConfig = Configuration.config["model"]
-    datasetConfig = Configuration.config["dataset"]
+    modelConfig = Configuration.config.get("model")
+    datasetConfig = Configuration.config.get("dataset")
 
-    batchSize = datasetConfig["BATCH_SIZE"]
+    if (modelConfig is None) or (datasetConfig is None):
+        raise ValueError("Model or Dataset configuration is missing.")
+
+    datasetDir = datasetConfig.get("DATASET_DIR")
+    if datasetDir is None or not isinstance(datasetDir, str):
+        datasetDir = "Data"
+        logging.warning(
+            f"Invalid or missing DATASET_DIR in configuration. Using default dataset directory {datasetDir}."
+        )
+    if not os.path.exists(datasetDir):
+        raise ValueError(f"Dataset directory {datasetDir} does not exist.")
+
+    batchSize = datasetConfig.get("BATCH_SIZE")
+    if batchSize is None or not isinstance(batchSize, int) or batchSize <= 0:
+        batchSize = 10
+        logging.warning(
+            f"Invalid or missing BATCH_SIZE in configuration. Using default batch size of {batchSize}."
+        )
+
+    classNamesFile = datasetConfig.get("CLASS_NAME_FILE")
+    if classNamesFile is None or not isinstance(classNamesFile, str):
+        classNamesFile = "ClassName.txt"
+        logging.warning(
+            f"Invalid or missing CLASS_NAME_FILE in configuration. Using default {classNamesFile}."
+        )
+
+    inputHeight = datasetConfig.get("IMAGE_HEIGHT")
+    if inputHeight is None or not isinstance(inputHeight, int) or inputHeight <= 0:
+        inputHeight = 24
+        logging.warning(
+            f"Invalid or missing IMAGE_HEIGHT in configuration, using default {inputHeight}."
+        )
+
+    inputWidth = datasetConfig.get("IMAGE_WIDTH")
+    if inputWidth is None or not isinstance(inputWidth, int) or inputWidth <= 0:
+        inputWidth = 24
+        logging.warning(
+            f"Invalid or missing IMAGE_WIDTH in configuration, using default {inputWidth}."
+        )
+
+    numberOfEpochs = modelConfig.get("EPOCHS")
+    if (
+        numberOfEpochs is None
+        or not isinstance(numberOfEpochs, int)
+        or numberOfEpochs <= 0
+    ):
+        numberOfEpochs = 20
+        logging.warning(
+            f"Invalid or missing EPOCHS in configuration, using default {numberOfEpochs}."
+        )
+    modelPath = modelConfig.get("MODEL_PATH")
+    if modelPath is None or not isinstance(modelPath, str):
+        modelPath = "ImageClassifier.keras"
+        logging.warning(
+            f"Invalid or missing MODEL_PATH in configuration, using default {modelPath}."
+        )
+
     imageDataset = Dataset.Dataset(
-        datasetDir=datasetConfig["DATASET_DIR"],
-        imageWidth=datasetConfig["IMAGE_WIDTH"],
-        imageHeight=datasetConfig["IMAGE_HEIGHT"],
-        batchSize=datasetConfig["BATCH_SIZE"],
+        datasetDir=datasetDir,
+        imageWidth=inputWidth,
+        imageHeight=inputHeight,
+        batchSize=batchSize,
     )
 
     # Get class names from dataset
     classNames = imageDataset.getClassNames()
     nClasses = len(classNames)
 
-    np.savetxt(datasetConfig["CLASS_NAME_FILE"], classNames, fmt="%s")
+    np.savetxt(classNamesFile, classNames, fmt="%s")
 
     trainData, validData, testData = imageDataset.getData(
         trainRatio=0.8, validRatio=0.2
@@ -39,19 +95,19 @@ def trainAndSave():
     imageDataset.plotExamplesFromDataset(7)
 
     model = Model.Model(
-        inputWidth=datasetConfig["IMAGE_HEIGHT"],
-        inputHeight=datasetConfig["IMAGE_HEIGHT"],
+        inputWidth=inputWidth,
+        inputHeight=inputHeight,
         nClasses=nClasses,
     )
     model.plotModel()
     model.train(
-        nEpochs=modelConfig["EPOCHS"],
+        nEpochs=numberOfEpochs,
         trainDataset=trainData,
         validDataset=validData,
         testDataset=testData,
     )
     model.plotTrainingHistory()
-    model.saveModel(filePath=modelConfig["MODEL_PATH"])
+    model.saveModel(filePath=modelPath)
 
 
 if __name__ == "__main__":

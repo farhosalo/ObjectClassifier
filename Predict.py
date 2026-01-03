@@ -35,12 +35,29 @@ def loadAndPredict():
         logging.fatal("Input file is not an image")
         return
 
-    modelConfig = Configuration.config["model"]
-    datasetConfig = Configuration.config["dataset"]
+    modelConfig = Configuration.config.get("model")
+    datasetConfig = Configuration.config.get("dataset")
+
+    if (modelConfig is None) or (datasetConfig is None):
+        raise ValueError("Model or Dataset configuration is missing.")
+
+    classNamesFile = datasetConfig.get("CLASS_NAME_FILE")
+    if classNamesFile is None or not isinstance(classNamesFile, str):
+        classNamesFile = "ClassName.txt"
+        logging.warning(
+            f"Invalid or missing CLASS_NAME_FILE in configuration. Using default {classNamesFile}."
+        )
+
+    modelPath = modelConfig.get("MODEL_PATH")
+    if modelPath is None or not isinstance(modelPath, str):
+        modelPath = "ImageClassifier.keras"
+        logging.warning(
+            f"Invalid or missing MODEL_PATH in configuration, using default {modelPath}."
+        )
 
     imagePredictor = Predictor.Predictor(
-        modelPath=modelConfig["MODEL_PATH"],
-        classNamePath=datasetConfig["CLASS_NAME_FILE"],
+        modelPath=modelPath,
+        classNamePath=classNamesFile,
     )
 
     pred = imagePredictor.predict(args.input)

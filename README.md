@@ -1,11 +1,19 @@
 # Image Classifier
 
-This project aims to create a robust image classifier using a relatively small dataset. We’ll use TensorFlow and transfer learning, specifically the „Xception“ model and the „imagenet“ dataset.
+This project aims to create a robust image classifier using a relatively small dataset. We’ll use  
+**TensorFlow / Keras** with  **transfer learning** based on **Xception** pre-trained on **ImageNet**.
 
 The project consists of two main parts:
 
 - Model Training: The first phase involves training the model using the provided dataset.
 - Model Utilization: The second phase involves using the trained model to classify images.
+
+## Features
+
+- Uses **TensorFlow 2.x / Keras** for building and training models.
+- Transfer learning with **Xception** pre-trained on **ImageNet**.
+- Supports custom datasets.
+- Modular and easy to extend.
 
 ## Prepare environment
 
@@ -27,6 +35,8 @@ To install the project, run the following two commands from your terminal:
 git clone https://github.com/farhosalo/ImageClassifier.git
 cd ImageClassifier
 ```
+
+⚠️ Note: TensorFlow automatically downloads the pre-trained ImageNet weights. Therefore, we do not include the weight files in this repository. Please ensure compliance with the ImageNet dataset terms for any commercial use.
 
 ## Configuration (For Expert Users)
 
@@ -95,4 +105,8 @@ Contributions are welcome! If you find any bugs or have ideas for new features, 
 
 ## License
 
-This project is licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).
+- This project is licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). See the [LICENSE](LICENSE) file for details.
+
+- Additional copyright and attribution notices can be found in the [NOTICE](NOTICE) file.
+
+- Third-Party Libraries and Licenses: This project uses several third-party libraries. See [THIRD_PARTY_LICENSES](THIRD_PARTY_LICENSES.md) for a complete list of dependencies and their licenses.

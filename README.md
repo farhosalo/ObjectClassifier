@@ -110,3 +110,9 @@ Contributions are welcome! If you find any bugs or have ideas for new features, 
 - Additional copyright and attribution notices can be found in the [NOTICE](NOTICE) file.
 
 - Third-Party Libraries and Licenses: This project uses several third-party libraries. See [THIRD_PARTY_LICENSES](THIRD_PARTY_LICENSES.md) for a complete list of dependencies and their licenses.
+
+## Disclaimer
+
+- This repository exclusively contains original source code.
+- Pretrained model weights are downloaded directly from official sources.
+- Users are responsible for ensuring that they comply with the license terms when using third-party models.
